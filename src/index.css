@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	body {
+		font-family: 'Maersk Text', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+}
+
+@layer utilities {
+	.font-maersk-text {
+		font-family: 'Maersk Text', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+	.font-maersk-headline {
+		font-family: 'Maersk Headline', 'Maersk Text', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	}
+}

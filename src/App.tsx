@@ -141,16 +141,17 @@ export default function App() {
   const showToolbar = hasPreview && (output.type !== 'zpl-text');
 
   return (
-    <div className="min-h-screen bg-[#F0F4F7] font-sans">
+    <div className="min-h-screen bg-[#F0F4F7] font-maersk-text">
       {/* Header */}
-      <header className="bg-[#00243D] border-b border-[#003A5C]">
+      <header className="bg-[#0073AB] border-b border-[#005E8C]">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/images/image.png" alt="Maersk" className="h-7 w-auto object-contain brightness-0 invert" />
+          <div className="flex items-center gap-2.5">
+            <img src={`${import.meta.env.BASE_URL}images/MAERSK.png`} alt="Maersk" className="h-7 w-auto object-contain" />
+            <span className="text-sm font-semibold tracking-[0.08em] text-white uppercase font-maersk-headline">Maersk</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#42B0D5]" />
-            <span className="text-[11px] tracking-[0.15em] font-medium text-[#42B0D5] uppercase">Base64 Converter</span>
+            <span className="w-2 h-2 rounded-full bg-white/90" />
+            <span className="text-[15px] tracking-[0.15em] font-medium text-white uppercase font-maersk-headline">Base64 Converter</span>
           </div>
         </div>
       </header>
@@ -164,7 +165,7 @@ export default function App() {
             </span>
             <span className="text-[11px] font-medium text-[#4A6278] tracking-wide">Logistics utility &middot; Base64 toolkit</span>
           </div>
-          <h1 className="text-[2.6rem] font-bold leading-tight text-[#00243D] mb-3">
+          <h1 className="text-[2.6rem] font-bold leading-tight text-[#00243D] mb-3 font-maersk-headline">
             Decode Base64 to{' '}
             <span className="text-[#0073AB]">PDF, PNG</span>{' '}
             or{' '}
