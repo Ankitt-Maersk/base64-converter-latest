@@ -152,6 +152,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-white/90" />
             <span className="text-[15px] tracking-[0.15em] font-medium text-white uppercase font-maersk-headline">Base64 Converter</span>
+            <span className="text-xs text-white/90 font-maersk-text">Powered by Maersk</span>
           </div>
         </div>
       </header>
