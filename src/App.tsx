@@ -13,6 +13,7 @@ import {
   Check,
   AlertCircle,
   X,
+  RotateCw,
 } from 'lucide-react';
 
 type Format = 'pdf' | 'png' | 'zpl';
@@ -29,6 +30,7 @@ export default function App() {
   const [format, setFormat] = useState<Format>('pdf');
   const [input, setInput] = useState('');
   const [zoom, setZoom] = useState(100);
+  const [rotation, setRotation] = useState(0);
   const [output, setOutput] = useState<OutputState | null>(null);
   const [zplStep, setZplStep] = useState<ZplStep>(1);
   const [zplText, setZplText] = useState('');
@@ -44,6 +46,7 @@ export default function App() {
 
     setIsConverting(true);
     setOutput(null);
+    setRotation(0);
 
     try {
       if (format === 'pdf') {
@@ -85,6 +88,7 @@ export default function App() {
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
       setZplStep(2);
+      setRotation(0);
       setOutput({ type: 'zpl-image', url });
     } catch {
       setOutput({ type: 'zpl-text', text: zplText, error: 'Could not render ZPL preview. Check network or ZPL syntax.' });
@@ -129,6 +133,7 @@ export default function App() {
     setZplText('');
     setZplStep(1);
     setZoom(100);
+    setRotation(0);
   };
 
   const formatCards = [
@@ -139,6 +144,7 @@ export default function App() {
 
   const hasPreview = output && !output.error && (output.url || (output.type === 'zpl-text' && output.text));
   const showToolbar = hasPreview && (output.type !== 'zpl-text');
+  const canRotate = output?.type === 'png' || output?.type === 'zpl-image';
 
   return (
     <div className="min-h-screen bg-[#F0F4F7] font-maersk-text">
@@ -295,6 +301,18 @@ export default function App() {
                   <button onClick={() => setZoom(z => Math.min(200, z + 25))} className="p-1.5 rounded hover:bg-[#E6EFF5] transition-colors text-[#4A6278]" title="Zoom in">
                     <ZoomIn size={14} />
                   </button>
+                  {canRotate && (
+                    <>
+                      <div className="w-px h-4 bg-[#DDE6EF] mx-1" />
+                      <button
+                        onClick={() => setRotation(r => (r + 90) % 360)}
+                        className="p-1.5 rounded hover:bg-[#E6EFF5] transition-colors text-[#4A6278]"
+                        title="Rotate 90 deg"
+                      >
+                        <RotateCw size={14} />
+                      </button>
+                    </>
+                  )}
                   <div className="w-px h-4 bg-[#DDE6EF] mx-1" />
                   <button onClick={handlePrint} className="p-1.5 rounded hover:bg-[#E6EFF5] transition-colors text-[#4A6278]" title="Print">
                     <Printer size={14} />
@@ -332,7 +350,7 @@ export default function App() {
                   />
                 </div>
               ) : output.type === 'png' && output.url ? (
-                <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top center', transition: 'transform 0.2s' }}>
+                <div style={{ transform: `scale(${zoom / 100}) rotate(${rotation}deg)`, transformOrigin: 'center center', transition: 'transform 0.2s' }}>
                   <img
                     src={output.url}
                     alt="PNG Preview"
@@ -345,7 +363,7 @@ export default function App() {
                   {output.text}
                 </pre>
               ) : output.type === 'zpl-image' && output.url ? (
-                <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top center', transition: 'transform 0.2s' }}>
+                <div style={{ transform: `scale(${zoom / 100}) rotate(${rotation}deg)`, transformOrigin: 'center center', transition: 'transform 0.2s' }}>
                   <img
                     src={output.url}
                     alt="ZPL Label Preview"
